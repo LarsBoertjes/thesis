@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="24.9.3">
+  <diagram name="Pagina-1" id="j0q-M3zI3Chthzf9emS8">
+    <mxGraphModel dx="2486" dy="878" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_iwNHxtDADa4gL8woHnr-27" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="450" width="140" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="D2xmy1rbkFpZi_v9BKto-1" value="&lt;b&gt;Oblique Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="-490" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="D2xmy1rbkFpZi_v9BKto-2" value="&lt;b&gt;Rectified Oblique Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="-490" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="D2xmy1rbkFpZi_v9BKto-3" value="&lt;b&gt;Oblique Capture&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="-490" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-1" value="Input Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-2" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="D2xmy1rbkFpZi_v9BKto-3" target="D2xmy1rbkFpZi_v9BKto-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="570" as="sourcePoint" />
+            <mxPoint x="520" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-3" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="D2xmy1rbkFpZi_v9BKto-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-430" y="520" as="sourcePoint" />
+            <mxPoint x="-430.34" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-4" value="&lt;b&gt;Segmentation of Buildings in oblique photo&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="-280" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="_iwNHxtDADa4gL8woHnr-5" target="_iwNHxtDADa4gL8woHnr-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-5" value="&lt;b&gt;Linking Buildings through Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="-280" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-6" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="D2xmy1rbkFpZi_v9BKto-2" target="_iwNHxtDADa4gL8woHnr-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="450" as="sourcePoint" />
+            <mxPoint x="50" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_iwNHxtDADa4gL8woHnr-4" target="_iwNHxtDADa4gL8woHnr-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="450" as="sourcePoint" />
+            <mxPoint x="50" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-8" value="&lt;b&gt;Derive Simple Building Segmented Mesh using MVS&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="-280" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="_iwNHxtDADa4gL8woHnr-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-220" y="520" as="sourcePoint" />
+            <mxPoint x="-220.34" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-10" value="Initial Mesh Creation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="-280" y="290" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-11" value="&lt;b&gt;Construct KPI for geometric entropy on building level&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="-70" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-12" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_iwNHxtDADa4gL8woHnr-8" target="_iwNHxtDADa4gL8woHnr-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-80" y="710" as="sourcePoint" />
+            <mxPoint x="10" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-13" value="&lt;b&gt;Add extra points to complex areas based on KPI&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="-70" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="_iwNHxtDADa4gL8woHnr-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-10" y="520" as="sourcePoint" />
+            <mxPoint x="-10.340000000000003" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-15" value="&lt;b&gt;Create Mesh with Adaptive detail allocation based on Geometric Entropy of building features&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="-70" y="680" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-16" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="_iwNHxtDADa4gL8woHnr-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-10" y="630" as="sourcePoint" />
+            <mxPoint x="-10.340000000000003" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-17" value="Final Mesh Creation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="-70" y="290" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-22" value="&lt;b&gt;Segment on Building Level&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="-70" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-23" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_iwNHxtDADa4gL8woHnr-22" target="_iwNHxtDADa4gL8woHnr-11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="110" y="430" as="sourcePoint" />
+            <mxPoint x="110.34" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-28" value="Major Research Contribution Phase" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=10;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="-100" y="585" width="340" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
