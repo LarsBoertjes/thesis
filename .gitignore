@@ -3,3 +3,5 @@
 .idea/misc.xml
 .idea/modules.xml
 /.idea
+experiments/checkpoints/sam_vit_h_4b8939.pth
+/data
