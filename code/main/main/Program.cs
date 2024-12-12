@@ -12,13 +12,13 @@ namespace MeshProcessingBackend
             Console.WriteLine("Mesh Processing Started");
 
             // Start Python script for MVS processing (Multi-View Stereo)
-            string pythonScriptPath = @"path_to_your_python_script.py";  // Replace with the actual path to your Python script
-            string pythonArguments = "image1.jpg image2.jpg";  // Example arguments for Python script (adjust as needed)
+            string pythonScriptPath = @"C:\Users\LarsBroertjes\Documents\GitHub\thesis\code\main\pipeline_test.py";
+            string pythonArguments = ""; 
             RunPythonScript(pythonScriptPath, pythonArguments);
 
             // After Python processing, you can load and manipulate meshes
-            string meshFilePath = @"path_to_generated_mesh.obj";
-            LoadAndProcessMesh(meshFilePath);
+            //string meshFilePath = @"path_to_generated_mesh.obj";
+            //LoadAndProcessMesh(meshFilePath);
 
             Console.WriteLine("Mesh processing completed!");
         }
@@ -30,7 +30,7 @@ namespace MeshProcessingBackend
             {
                 // Create a new process to execute the Python script
                 ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = "python";  // Make sure Python is in your PATH or use the full path to Python
+                start.FileName = @"C:\Users\LarsBroertjes\Documents\GitHub\thesis\.venv\Scripts\python.exe"; // Adjust this path
                 start.Arguments = $"{scriptPath} {arguments}";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
