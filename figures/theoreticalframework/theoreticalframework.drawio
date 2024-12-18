@@ -1,11 +1,26 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.1">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.3">
   <diagram name="Pagina-1" id="j0q-M3zI3Chthzf9emS8">
-    <mxGraphModel dx="1878" dy="584" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1859" dy="494" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="_iwNHxtDADa4gL8woHnr-27" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
-          <mxGeometry x="-100" y="206.47058823529412" width="229.09090909090915" height="547.0588235294118" as="geometry" />
+        <mxCell id="ZitkEd-snLWagSEUDy_k-119" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="703.59" y="714.45" width="376.41" height="801.1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-115" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="ZitkEd-snLWagSEUDy_k-119">
+          <mxGeometry y="198.97919062162262" width="342.3775766075155" height="403.1416187567548" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-116" value="Main Research Focus" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=10;rotation=90;" vertex="1" parent="ZitkEd-snLWagSEUDy_k-119">
+          <mxGeometry x="48.9418415166933" y="380.3927679658232" width="623.5565300186372" height="40.31446406835371" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-113" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-100" y="201.8181818181818" width="272.8074866310161" height="556.3636363636365" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-27" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="ZitkEd-snLWagSEUDy_k-113" vertex="1">
+          <mxGeometry y="4.652406417112303" width="229.09090909090915" height="547.0588235294118" as="geometry" />
+        </mxCell>
+        <mxCell id="_iwNHxtDADa4gL8woHnr-28" value="Main Research Focus" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=10;rotation=90;" parent="ZitkEd-snLWagSEUDy_k-113" vertex="1">
+          <mxGeometry x="-32.72727272727275" y="250.82887700534764" width="556.3636363636365" height="54.70588235294118" as="geometry" />
         </mxCell>
         <mxCell id="D2xmy1rbkFpZi_v9BKto-1" value="&lt;b&gt;Oblique Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="-490" y="460" width="120" height="60" as="geometry" />
@@ -130,11 +145,331 @@
             <mxPoint x="-110" y="90" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="_iwNHxtDADa4gL8woHnr-28" value="Main Research Focus" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=10;rotation=90;" parent="1" vertex="1">
-          <mxGeometry x="-132.72727272727275" y="452.64705882352945" width="556.3636363636365" height="54.70588235294118" as="geometry" />
-        </mxCell>
         <mxCell id="_iwNHxtDADa4gL8woHnr-17" value="Adaptive Mesh Refinement" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" parent="1" vertex="1">
           <mxGeometry x="-70" y="170" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-2" value="&lt;b&gt;Oblique Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="360" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-5" value="Input Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="390" y="188.24" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-8" value="&lt;b&gt;Segmentation of Oblique using SAM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-10" target="ZitkEd-snLWagSEUDy_k-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-10" value="&lt;b&gt;Linking Buildings through Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="447.34999999999997" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-11" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-2" target="ZitkEd-snLWagSEUDy_k-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="618.24" as="sourcePoint" />
+            <mxPoint x="890" y="418.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-12" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-32" target="ZitkEd-snLWagSEUDy_k-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="440" as="sourcePoint" />
+            <mxPoint x="890" y="418.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-13" value="&lt;b&gt;Sparse Mesh Creation&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="554.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="ZitkEd-snLWagSEUDy_k-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="538.24" as="sourcePoint" />
+            <mxPoint x="619.66" y="578.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-15" value="Initial Mesh Creation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="560" y="188.24" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-16" value="&lt;b&gt;Building-Level KPI&lt;sup&gt;1&lt;/sup&gt; for Geometric &amp;amp; Semantic Entropy&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="950" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-17" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-13" target="ZitkEd-snLWagSEUDy_k-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="728.24" as="sourcePoint" />
+            <mxPoint x="850" y="498.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-18" value="&lt;b&gt;Targeted Point Addition based on KPI&lt;sup&gt;1&lt;/sup&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="950" y="340.00000000000006" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-19" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" target="ZitkEd-snLWagSEUDy_k-18" source="ZitkEd-snLWagSEUDy_k-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1010" y="316.48" as="sourcePoint" />
+            <mxPoint x="1009.66" y="356.48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-20" value="&lt;b&gt;Create Implicit/Explicit Mesh from Adaptive Point Cloud&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="950" y="447.35" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-21" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" target="ZitkEd-snLWagSEUDy_k-20" source="ZitkEd-snLWagSEUDy_k-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1010" y="426.48" as="sourcePoint" />
+            <mxPoint x="1009.66" y="466.48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-22" value="&lt;b&gt;Segment on Building Level using SAM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="770" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-23" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-22" target="ZitkEd-snLWagSEUDy_k-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="950" y="328.24" as="sourcePoint" />
+            <mxPoint x="950.34" y="388.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-24" value="&lt;b&gt;KPI&lt;sup&gt;2&lt;/sup&gt; on&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;Mesh Quality&lt;/b&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="950" y="660" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-25" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-20" target="ZitkEd-snLWagSEUDy_k-68">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1020" y="436.48" as="sourcePoint" />
+            <mxPoint x="1010" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-31" value="Adaptive Mesh Refinement" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="950" y="188.24" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-32" value="&lt;b&gt;Identifying building masks&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-33" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-8" target="ZitkEd-snLWagSEUDy_k-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="630" y="450" as="sourcePoint" />
+            <mxPoint x="630" y="488" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-37" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-24" target="ZitkEd-snLWagSEUDy_k-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1230" y="508.24" as="sourcePoint" />
+            <mxPoint x="1090" y="508.24" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1090" y="690" />
+              <mxPoint x="1090" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-40" value="&lt;b&gt;Oblique Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-41" value="Input Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="188.24" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-42" value="&lt;b&gt;Sparse Point Cloud Generation (SfM)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-45" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-40" target="ZitkEd-snLWagSEUDy_k-42">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1350" y="618.24" as="sourcePoint" />
+            <mxPoint x="1770" y="418.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-47" value="&lt;b&gt;Dense Point Cloud Generation (MVS)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-49" value="Point Cloud Creation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="188.24" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-51" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-47" target="ZitkEd-snLWagSEUDy_k-56">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1640" y="728.24" as="sourcePoint" />
+            <mxPoint x="1730" y="498.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-56" value="&lt;b&gt;Surface Reconstruction&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="238.24" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-58" value="&lt;b&gt;Final Mesh&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="343.74" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-59" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" target="ZitkEd-snLWagSEUDy_k-58">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1710" y="298.24" as="sourcePoint" />
+            <mxPoint x="1720" y="271.98" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-60" value="Mesh Creation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="188.24" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-62" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-42">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1510" y="450" as="sourcePoint" />
+            <mxPoint x="1500.0000000000005" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-64" value="&lt;b&gt;With semantics in final model&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="560" y="60" width="310" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-65" value="&lt;b&gt;Without semantics in final model&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="580" y="753.53" width="310" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-66" value="&lt;b&gt;Regular 3D reconstruction&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="60" width="310" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-67" value="&lt;b&gt;Previous version theoretical framework&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="-300" y="60" width="310" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-68" value="&lt;b&gt;Final Mesh&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="950" y="555" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-70" value="Adding Semantics" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="770" y="188.24" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-71" value="&lt;b&gt;Adding Semantics from SAM sgmentation to mesh&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="770" y="555" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-72" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-22" target="ZitkEd-snLWagSEUDy_k-71">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1020" y="410" as="sourcePoint" />
+            <mxPoint x="1020" y="457" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-73" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-71" target="ZitkEd-snLWagSEUDy_k-68">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="900" y="278" as="sourcePoint" />
+            <mxPoint x="960" y="278" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-74" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-68" target="ZitkEd-snLWagSEUDy_k-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1020" y="517" as="sourcePoint" />
+            <mxPoint x="1020" y="565" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-76" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-24" target="ZitkEd-snLWagSEUDy_k-71">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="790" y="751" as="sourcePoint" />
+            <mxPoint x="880" y="649" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="830" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-77" value="&lt;b&gt;Oblique Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="380" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-78" value="Input Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="410" y="870" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-79" value="&lt;b&gt;Segmentation of Oblique using SAM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-80" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-81" target="ZitkEd-snLWagSEUDy_k-84">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-81" value="&lt;b&gt;Linking Buildings through Images&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1129.11" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-82" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-77" target="ZitkEd-snLWagSEUDy_k-79">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="1300" as="sourcePoint" />
+            <mxPoint x="890" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-83" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-98" target="ZitkEd-snLWagSEUDy_k-81">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="1121.76" as="sourcePoint" />
+            <mxPoint x="890" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-84" value="&lt;b&gt;Sparse Point Cloud Creation&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1236.26" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-85" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="ZitkEd-snLWagSEUDy_k-84">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="1220" as="sourcePoint" />
+            <mxPoint x="619.66" y="1260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-86" value="Initial Mesh Creation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="560" y="870" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-87" value="&lt;b&gt;Building-Level KPI&lt;sup&gt;1&lt;/sup&gt; for Geometric &amp;amp; Semantic Entropy&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="720" y="1236.26" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-88" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-79" target="ZitkEd-snLWagSEUDy_k-93">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="1410" as="sourcePoint" />
+            <mxPoint x="850" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-89" value="&lt;b&gt;Targeted Point Addition based on KPI&lt;sup&gt;1&lt;/sup&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="880" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-91" value="&lt;b&gt;Create Implicit/Explicit Mesh from Adaptive Point Cloud&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="880" y="1027.3500000000001" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-92" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-89" target="ZitkEd-snLWagSEUDy_k-91">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="940" y="1006.48" as="sourcePoint" />
+            <mxPoint x="939.66" y="1046.48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-93" value="&lt;b&gt;Segment on Building Level using SAM&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="720" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-95" value="&lt;b&gt;KPI&lt;sup&gt;2&lt;/sup&gt; on&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;Mesh Quality&lt;/b&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="880" y="1240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-96" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-91" target="ZitkEd-snLWagSEUDy_k-101">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="950" y="1016.48" as="sourcePoint" />
+            <mxPoint x="940" y="1120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-97" value="Adaptive Mesh Refinement" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="790" y="870" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-98" value="&lt;b&gt;Identifying building masks&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1021.76" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-99" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-79" target="ZitkEd-snLWagSEUDy_k-98">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="630" y="1131.76" as="sourcePoint" />
+            <mxPoint x="630" y="1169.76" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-100" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-95" target="ZitkEd-snLWagSEUDy_k-89">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1160" y="1088.24" as="sourcePoint" />
+            <mxPoint x="1020" y="1088.24" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1020" y="1270" />
+              <mxPoint x="1020" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-101" value="&lt;b&gt;Final Mesh&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#f9f7ed;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="880" y="1135" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-106" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-101" target="ZitkEd-snLWagSEUDy_k-95">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="950" y="1097" as="sourcePoint" />
+            <mxPoint x="950" y="1145" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-108" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-84" target="ZitkEd-snLWagSEUDy_k-87">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="690" y="960" as="sourcePoint" />
+            <mxPoint x="760" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-109" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-93" target="ZitkEd-snLWagSEUDy_k-87">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="660" y="960" as="sourcePoint" />
+            <mxPoint x="730" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZitkEd-snLWagSEUDy_k-111" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZitkEd-snLWagSEUDy_k-87" target="ZitkEd-snLWagSEUDy_k-89">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="1160" as="sourcePoint" />
+            <mxPoint x="850" y="1110" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
