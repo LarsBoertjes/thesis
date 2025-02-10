@@ -4,7 +4,6 @@
 .idea/modules.xml
 /.idea
 experiments/checkpoints/sam_vit_h_4b8939.pth
-/data
 /.vs
 /experiments/test/node_modules
 /code/main/.vs
@@ -15,3 +14,5 @@ experiments/flightplans_oblique.qgz
 /code/ConsoleApp1/ConsoleApp1/obj
 code/ConsoleApp1/ConsoleApp1/ConsoleApp1.csproj
 code/ConsoleApp1/ConsoleApp1.sln
+/data/experimental
+/data/BAGpositiondata/AreaOfInterests/Utrecht-SmallTestArea-selection
