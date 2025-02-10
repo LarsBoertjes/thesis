@@ -11,3 +11,7 @@ experiments/checkpoints/sam_vit_h_4b8939.pth
 /code/main/main/obj
 /code/main/main/bin
 experiments/flightplans_oblique.qgz
+/code/ConsoleApp1/.vs
+/code/ConsoleApp1/ConsoleApp1/obj
+code/ConsoleApp1/ConsoleApp1/ConsoleApp1.csproj
+code/ConsoleApp1/ConsoleApp1.sln
