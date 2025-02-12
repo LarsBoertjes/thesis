@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Geodelta.Basisregistraties.BAG" Version="0.1.0" />
+    <PackageReference Include="Geodelta.LinearAlgebra.Rotation" Version="1.0.2" />
+    <PackageReference Include="Geodelta.Photogrammetry" Version="1.1.1" />
+  </ItemGroup>
+
 </Project>
