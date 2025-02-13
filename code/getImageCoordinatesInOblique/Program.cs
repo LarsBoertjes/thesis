@@ -7,35 +7,45 @@ using Geodelta.Photogrammetry;
 using Geodelta.Units;
 using Geodelta.Units.Length;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Data.SqlClient;
+using System.Threading.Tasks;
+using NetTopologySuite.Operation.Valid;
+using System.Reflection;
+using Npgsql;
 
 namespace TerrainPointExample
 {
     class Program
     {
-        static void Main()
+        static async Task Main()
         {
+            var connectionString = $"Host=localhost;Username=postgres;Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};Database=aerial_bag_db";
+            await using var dataSource = NpgsqlDataSource.Create(connectionString);
 
-            // 1. Load in BAG data for AOI
+            // Retrieve all rows from camera_specs test
+            await using (var cmd = dataSource.CreateCommand("SELECT * FROM camera_specs"))
+            await using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        var dataTypeName = reader.GetFieldType(i).Name; 
 
-            // 2. Load in footprint data for AOI
+                        if (dataTypeName == "Double" || dataTypeName == "DoublePrecision")
+                        {
+                            Console.WriteLine(reader.GetDouble(i));
+                        }
+                        else 
+                        {
+                            Console.WriteLine(reader.GetValue(i));
+                        }
+                    }
+                }
+            }
 
-            // 3. Load in interior and exterior parameters for photos in AOI
 
 
-            Millimeter millimeter = new Millimeter();
-
-            TerrainPoint<Millimeter> point = new TerrainPoint<Millimeter>(
-                    new Quantity<Millimeter>(100.0, millimeter),
-                    new Quantity<Millimeter>(200.0, millimeter),
-                    new Quantity<Millimeter>(50.0, millimeter),
-                    "SurveyPoint1");
-
-            Console.WriteLine(point.ToString());
-
-            Meter meter = new Meter();
-
-            TerrainPoint<Meter> convertedPoint = point.As(meter);
-            Console.WriteLine(convertedPoint.ToString());
         }
     }
 }
