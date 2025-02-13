@@ -14,6 +14,14 @@ namespace TerrainPointExample
     {
         static void Main()
         {
+
+            // 1. Load in BAG data for AOI
+
+            // 2. Load in footprint data for AOI
+
+            // 3. Load in interior and exterior parameters for photos in AOI
+
+
             Millimeter millimeter = new Millimeter();
 
             TerrainPoint<Millimeter> point = new TerrainPoint<Millimeter>(
@@ -31,3 +39,4 @@ namespace TerrainPointExample
         }
     }
 }
+
