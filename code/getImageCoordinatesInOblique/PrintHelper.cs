@@ -8,6 +8,7 @@ namespace Helpers
     {
         public static void PrintImagePlaneInformation(ImagePlane imagePlane)
         {
+            Console.WriteLine("========================================");
             Console.WriteLine($"Image: {imagePlane.Name}");
             Console.WriteLine($"Optical Center: X={imagePlane.ExteriorOrientation.OpticalCenter.X}, " +
                               $"Y={imagePlane.ExteriorOrientation.OpticalCenter.Y}, " +

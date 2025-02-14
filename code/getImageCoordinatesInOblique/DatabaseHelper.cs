@@ -13,14 +13,18 @@ namespace Helpers
 {
     public static class DatabaseHelper
     {
+        // Connecting to PostgreSQL database
         private static string ConnectionString => $"Host=localhost;Username=postgres;Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};Database=aerial_bag_db";
 
+        // Get camera specifications for Back, Fwd, Left and Right
         public static async Task<List<CameraSpecs>> GetCameraSpecsAsync()
         {
+            // Initialize custom cameraSpecList that reads in all columns from camera_specs table
             List<CameraSpecs> cameraSpecsList = new();
             Micrometer micrometer = new();
             Millimeter millimeter = new();
 
+            // Connecting to database and querying all rows from camera_specs
             await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
             await using var cmd = dataSource.CreateCommand("SELECT * FROM camera_specs");
             await using var reader = await cmd.ExecuteReaderAsync();
@@ -41,6 +45,7 @@ namespace Helpers
             return cameraSpecsList;
         }
 
+        // Constructing ImagePlane objects
         public static async Task<List<ImagePlane>> GetImagePlanesAsync(List<CameraSpecs> cameraSpecsList)
         {
             List<ImagePlane> imagePlanes = new();
@@ -48,6 +53,7 @@ namespace Helpers
             Degree degree = new();
             Millimeter millimeter = new();
 
+            // Connecting to database and querying all rows from image_specs
             await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
             await using var cmd = dataSource.CreateCommand("SELECT * FROM image_specs");
             await using var reader = await cmd.ExecuteReaderAsync();
@@ -63,11 +69,15 @@ namespace Helpers
                 var Kappa = new Quantity<Degree>(reader.GetDouble(6), degree);
                 var cameraId = reader.GetString(7);
 
+                // Creating ExteriorOrientation
                 var opticalCenter = new TerrainPoint<Meter>(X, Y, Z);
                 IRotation3D attitude = new RotationOPK(Omega, Phi, Kappa);
                 var exteriorOrientation = new ExteriorOrientation { OpticalCenter = opticalCenter, Attitude = attitude };
 
+                // Retrieving necessary information from camera_specs list
                 var matchingCameraSpecs = cameraSpecsList.Find(c => c.CameraId == cameraId);
+
+                // Creating InteriorOrientation
                 var interiorOrientation = new InteriorOrientation();
 
                 if (matchingCameraSpecs != null)
@@ -81,10 +91,37 @@ namespace Helpers
                     interiorOrientation.Sensor = new ImageSensor(sensorWidth, sensorHeight, matchingCameraSpecs.PixelSize);
                 }
 
+                // Adding imagePlane to list
                 imagePlanes.Add(new ImagePlane(exteriorOrientation, interiorOrientation, imageId));
             }
 
             return imagePlanes;
+        }
+
+        // Getting BAGids in footprint of image of smalltestarea
+        public static async Task<Dictionary<string, List<string>>> GetBAGinImage()
+        {
+            // Initialize custom cameraSpecList that reads in all columns from camera_specs table
+            Dictionary<string, List<string>> imageWithBagIDs = new();
+
+            // Getting Image ID and BagIDs present in image from flightplans table
+            await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+            await using var cmd = dataSource.CreateCommand("SELECT name, bag_ids_smalltestarea FROM flightplans WHERE bag_ids_smalltestarea IS NOT NULL;");
+            // change to command in next line if you want to query the bag_ids_testarea
+            //await using var cmd = dataSource.CreateCommand("SELECT name, bag_ids_testarea FROM flightplans WHERE bag_ids_smalltestarea IS NOT NULL;");
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                string imageId = reader.GetString(0);
+                string[] bagIdsArray = reader.GetFieldValue<string[]>(1);
+
+                // Convert array to a list and store in dictionary
+                imageWithBagIDs[imageId] = bagIdsArray.ToList();
+            }
+
+            return imageWthBagIDs
         }
     }
 }
