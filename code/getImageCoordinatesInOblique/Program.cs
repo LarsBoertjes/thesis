@@ -9,7 +9,7 @@ namespace TerrainPointExample
     class Program
     {
         static async Task Main()
-        {
+        { 
             // Loading camera specifications (Back, Fwd, Left and Right)
             Console.WriteLine("Loading camera specifications...");
             var cameraSpecsList = await DatabaseHelper.GetCameraSpecsAsync();
@@ -18,10 +18,21 @@ namespace TerrainPointExample
             Console.WriteLine("Loading image planes...");
             var imagePlanes = await DatabaseHelper.GetImagePlanesAsync(cameraSpecsList);
 
-            // Printing imagePlanes
-            Console.WriteLine($"There are {imagePlanes.Count} image planes constructed.");
-            PrintHelper.PrintImagePlaneInformation(imagePlanes[0]);
-            PrintHelper.PrintImagePlaneInformation(imagePlanes[^1]);
+            Dictionary<string, List<ImagePoint>> imagePrompts = await DatabaseHelper.GetImageBagCoordinates(imagePlanes);
+
+            foreach (string imageId in imagePrompts.Keys)
+            {
+                Console.WriteLine($"Image {imageId} has {imagePrompts[imageId].Count} buildings in the image. ");
+
+                foreach (ImagePoint imagePoint in imagePrompts[imageId])
+                {
+                    Console.WriteLine(imagePoint.ToString());
+                    Console.WriteLine(imagePoint.Row);
+                    Console.WriteLine(imagePoint.Column);
+                    Console.WriteLine("==========================");
+                }
+            }
+
         }
     }
 }

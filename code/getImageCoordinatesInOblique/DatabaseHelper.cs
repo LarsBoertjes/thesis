@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Globalization;
 using Geodelta.Photogrammetry;
 using Geodelta.Photogrammetry.IO.Exif;
 using Geodelta.LinearAlgebra.Rotation;
@@ -8,6 +9,10 @@ using Geodelta.Units;
 using Geodelta.Units.Length;
 using Geodelta.Units.Angle;
 using Npgsql;
+using Geodelta.CoordinateReferenceSystems.Grids;
+using NetTopologySuite.IO;
+using NetTopologySuite.Geometries;
+using Geodelta.IO.Xml;
 
 namespace Helpers
 {
@@ -98,30 +103,101 @@ namespace Helpers
             return imagePlanes;
         }
 
-        // Getting BAGids in footprint of image of smalltestarea
-        public static async Task<Dictionary<string, List<string>>> GetBAGinImage()
+        public static async Task<Dictionary<string, List<ImagePoint>>> GetImageBagCoordinates(List<ImagePlane> imagePlanes)
         {
-            // Initialize custom cameraSpecList that reads in all columns from camera_specs table
-            Dictionary<string, List<string>> imageWithBagIDs = new();
+            // Dictionary to store the result
+            Dictionary<string, List<ImagePoint>> imageBagCoordinates = new();
 
-            // Getting Image ID and BagIDs present in image from flightplans table
+            // Connecting to database and query image_id + BAG location point (3D with z=0)
             await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
-            await using var cmd = dataSource.CreateCommand("SELECT name, bag_ids_smalltestarea FROM flightplans WHERE bag_ids_smalltestarea IS NOT NULL;");
-            // change to command in next line if you want to query the bag_ids_testarea
-            //await using var cmd = dataSource.CreateCommand("SELECT name, bag_ids_testarea FROM flightplans WHERE bag_ids_smalltestarea IS NOT NULL;");
-
+            await using var cmd = dataSource.CreateCommand(@"
+            SELECT imageid, ST_AsText(geom) 
+            FROM image_prompts_3d, unnest(bag_coordinates) AS geom;");
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
-                string imageId = reader.GetString(0);
-                string[] bagIdsArray = reader.GetFieldValue<string[]>(1);
+                
+                string imageId = reader.GetString(0); // Read imageid
+                string wkt = reader.GetString(1);     // Read 3D geometry as WKT (Well-Known Text)
 
-                // Convert array to a list and store in dictionary
-                imageWithBagIDs[imageId] = bagIdsArray.ToList();
+                // Create a new Key if image_id is not already in dictionary
+                if (!imageBagCoordinates.ContainsKey(imageId))
+                    imageBagCoordinates[imageId] = new List<ImagePoint>();
+
+                if (!string.IsNullOrWhiteSpace(wkt))
+                {
+                    if (wkt.StartsWith("POINT("))
+                    {
+                        // Store WKT coordinates in string list
+                        string[] coordinates = wkt.Replace("POINT(", "").Replace(")", "").Trim().Split(' ');
+
+                        double x = double.Parse(coordinates[0], CultureInfo.InvariantCulture);
+                        double y = double.Parse(coordinates[1], CultureInfo.InvariantCulture);
+
+                        // Get the corresponding imagePlane object for the Image
+                        var matchingImagePlane = imagePlanes.Find(c => c.Name + ".jpg" == imageId);
+                        if (matchingImagePlane == null)
+                        {
+                            Console.WriteLine($"Warning: no ImagePlane found for ImageId {imageId}");
+                            continue;
+                        } 
+
+                        // Create 3D terrain point (TODO: fix z = 0.0)
+                        TerrainPoint terrainpoint = new TerrainPoint(x, y, 0.0, "BagObject");
+
+                        // Get PointObservation of a terrain point on the positive image plane
+                        IIdealizedPointObservation IdealizedImagePoint2D = terrainpoint.ProjectOntoImagePlane(matchingImagePlane);
+
+                        // TODO: Convert PointObservation to Imagepoint as point coordinates (origin upperleft corner)
+                        
+                        // TODO: Add Image point to corresponding image
+                        // imageBagCoordinates[imageId].Add(ImagePoint2D);
+                    }
+                }
             }
 
-            return imageWthBagIDs
+            return imageBagCoordinates;
+        }
+
+        // TODO upload all image_prompts_2d to database table image_prompts_2d
+
+        /*public static async Task UploadImagePrompts(Dictionary<string, List<ImagePoint>> imagePrompts)
+        {
+            // Connecting to the database
+            await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+
+            // Prepare the SQL command for inserting data
+            await using var cmd = dataSource.CreateCommand(@"
+                INSERT INTO image_prompts_2d (imageid, x_prompt, y_prompt)
+                VALUES (@imageid, @x_prompt, @y_prompt);");
+
+            // Add parameters to the command
+            cmd.Parameters.Add(new NpgsqlParameter("imageid", NpgsqlTypes.NpgsqlDbType.Text));
+            cmd.Parameters.Add(new NpgsqlParameter("x_prompt", NpgsqlTypes.NpgsqlDbType.Double));
+            cmd.Parameters.Add(new NpgsqlParameter("y_prompt", NpgsqlTypes.NpgsqlDbType.Double));
+
+            // Iterate over the dictionary and insert each ImagePoint
+            foreach (var kvp in imagePrompts)
+            {
+                string imageId = kvp.Key;
+                List<ImagePoint> imagePoints = kvp.Value;
+
+                foreach (var imagePoint in imagePoints)
+                {
+                    // Set the parameter values
+                    cmd.Parameters[0].Value = imageId;
+                    cmd.Parameters[1].Value = imagePoint.X
+
+
+                }
+            }
+        }*/
+
+        public static ImagePoint ConvertMmToPixelCoordinates(double x_mm, double y_mm, double pixelSize, double imageWidth, double imageHeight, PrincipalPoint principalPoint)
+        {
+            // TODO: Finish Conversion function.
+            return new ImagePoint(0, 0);
         }
     }
 }
