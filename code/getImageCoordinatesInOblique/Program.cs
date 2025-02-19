@@ -23,14 +23,6 @@ namespace TerrainPointExample
             foreach (string imageId in imagePrompts.Keys)
             {
                 Console.WriteLine($"Image {imageId} has {imagePrompts[imageId].Count} buildings in the image. ");
-
-                foreach (ImagePoint imagePoint in imagePrompts[imageId])
-                {
-                    Console.WriteLine(imagePoint.ToString());
-                    Console.WriteLine(imagePoint.Row);
-                    Console.WriteLine(imagePoint.Column);
-                    Console.WriteLine("==========================");
-                }
             }
 
         }

@@ -112,7 +112,7 @@ namespace Helpers
             await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
             await using var cmd = dataSource.CreateCommand(@"
             SELECT imageid, ST_AsText(geom) 
-            FROM image_prompts_3d, unnest(bag_coordinates) AS geom;");
+            FROM image_prompts_3d_sta, unnest(bag_coordinates) AS geom;");
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
@@ -150,9 +150,10 @@ namespace Helpers
                         IIdealizedPointObservation IdealizedImagePoint2D = terrainpoint.ProjectOntoImagePlane(matchingImagePlane);
 
                         // TODO: Convert PointObservation to Imagepoint as point coordinates (origin upperleft corner)
-                        
+                        ImagePoint ImagePoint2D = IdealizedToImagePoint(IdealizedImagePoint2D, matchingImagePlane);
+
                         // TODO: Add Image point to corresponding image
-                        // imageBagCoordinates[imageId].Add(ImagePoint2D);
+                        imageBagCoordinates[imageId].Add(ImagePoint2D);
                     }
                 }
             }
@@ -194,10 +195,40 @@ namespace Helpers
             }
         }*/
 
-        public static ImagePoint ConvertMmToPixelCoordinates(double x_mm, double y_mm, double pixelSize, double imageWidth, double imageHeight, PrincipalPoint principalPoint)
+        public static ImagePoint IdealizedToImagePoint(IIdealizedPointObservation idealizedPoint, ImagePlane imageplane) 
         {
+            // ImagePlane parameter
+            Quantity<Micrometer> pixelSize = imageplane.InteriorOrientation.Sensor.PixelHeight;
+            Quantity<Millimeter> Width = imageplane.InteriorOrientation.Sensor.Width;
+            Quantity<Millimeter> Height = imageplane.InteriorOrientation.Sensor.Height;
+            Quantity<Millimeter> FocalLenght = imageplane.InteriorOrientation.FocalLength;
+            PrincipalPoint principalPoint = imageplane.InteriorOrientation.PrincipalPoint;
+            Quantity<Millimeter> ppx = principalPoint.X;
+            Quantity<Millimeter> ppy = principalPoint.Y;
+
+            // Idealized Point parameters
+            Quantity<Millimeter> IdealizedX = idealizedPoint.X;
+            Quantity<Millimeter> IdealizedY = idealizedPoint.Y;
+
+            // Convert Idealized coordinates to image coordinates (relative to principal point)
+            Quantity<Millimeter> imageX = IdealizedX + ppx;
+            Quantity<Millimeter> imageY = IdealizedY + ppy;
+
+            // Convert from millimeters to pixels
+            double pixelSizeInMillimeters = pixelSize.As<Millimeter>().Value;
+            int pixelX = (int)(imageX.Value / pixelSizeInMillimeters);
+            int pixelY = (int)(imageY.Value / pixelSizeInMillimeters);
+
+            // Adjust for the origin (upper-left corner)
+            int imageWidthInPixels = (int)(Width.Value / pixelSizeInMillimeters);
+            int imageHeightInPixels = (int)(Height.Value / pixelSizeInMillimeters);
+
+            // Shift the origin from the center (principal point) to the upper-left corner
+            pixelX = pixelX + (imageWidthInPixels / 2);
+            pixelY = (imageHeightInPixels / 2) - pixelY;
+
             // TODO: Finish Conversion function.
-            return new ImagePoint(0, 0);
+            return new ImagePoint(pixelX, pixelY);
         }
     }
 }
