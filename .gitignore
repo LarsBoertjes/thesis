@@ -21,3 +21,8 @@ code/ConsoleApp1/ConsoleApp1.sln
 /code/getImageCoordinatesInOblique/obj
 /data/BAGpositiondata
 /data/BAGpositiondata
+/data/outputs/bagids
+/code/PolygonMapper/obj
+/code/PolygonMapper/bin
+/code/PolygonMapper/.vs
+/experiments/checkpoints

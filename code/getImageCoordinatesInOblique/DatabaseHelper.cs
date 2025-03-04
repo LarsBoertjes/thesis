@@ -112,7 +112,7 @@ namespace Helpers
             await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
             await using var cmd = dataSource.CreateCommand(@"
             SELECT imageid, ST_AsText(geom) 
-            FROM image_prompts_3d_sta, unnest(bag_coordinates) AS geom;");
+            FROM image_prompts_3d_ta, unnest(bag_coordinates) AS geom;");
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
@@ -143,16 +143,18 @@ namespace Helpers
                             continue;
                         } 
 
-                        // Create 3D terrain point (TODO: fix z = 0.0)
+                        // Create 3D terrain point (TODO: fix z = 0.0 with AHN)
                         TerrainPoint terrainpoint = new TerrainPoint(x, y, 0.0, "BagObject");
 
                         // Get PointObservation of a terrain point on the positive image plane
                         IIdealizedPointObservation IdealizedImagePoint2D = terrainpoint.ProjectOntoImagePlane(matchingImagePlane);
+                        var bla = matchingImagePlane.InteriorOrientation.UnapplyCorrection(IdealizedImagePoint2D);
+                        var bla2 = matchingImagePlane.InteriorOrientation.Sensor.ConvertToPixelCoordinates(bla);
 
-                        // TODO: Convert PointObservation to Imagepoint as point coordinates (origin upperleft corner)
+                        // Convert PointObservation to Imagepoint as point coordinates (origin upperleft corner)
                         ImagePoint ImagePoint2D = IdealizedToImagePoint(IdealizedImagePoint2D, matchingImagePlane);
 
-                        // TODO: Add Image point to corresponding image
+                        // Add Image point to corresponding image
                         imageBagCoordinates[imageId].Add(ImagePoint2D);
                     }
                 }
@@ -163,20 +165,21 @@ namespace Helpers
 
         // TODO upload all image_prompts_2d to database table image_prompts_2d
 
-        /*public static async Task UploadImagePrompts(Dictionary<string, List<ImagePoint>> imagePrompts)
+        public static async Task UploadImagePrompts(Dictionary<string, List<ImagePoint>> imagePrompts)
         {
             // Connecting to the database
             await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
 
             // Prepare the SQL command for inserting data
             await using var cmd = dataSource.CreateCommand(@"
-                INSERT INTO image_prompts_2d (imageid, x_prompt, y_prompt)
-                VALUES (@imageid, @x_prompt, @y_prompt);");
+                INSERT INTO image_prompts_2d_ta (imageid, x_prompt, y_prompt)
+                VALUES (@imageid, @x_prompt, @y_prompt)
+                ON CONFLICT DO NOTHING;");
 
             // Add parameters to the command
             cmd.Parameters.Add(new NpgsqlParameter("imageid", NpgsqlTypes.NpgsqlDbType.Text));
-            cmd.Parameters.Add(new NpgsqlParameter("x_prompt", NpgsqlTypes.NpgsqlDbType.Double));
-            cmd.Parameters.Add(new NpgsqlParameter("y_prompt", NpgsqlTypes.NpgsqlDbType.Double));
+            cmd.Parameters.Add(new NpgsqlParameter("x_prompt", NpgsqlTypes.NpgsqlDbType.Integer));
+            cmd.Parameters.Add(new NpgsqlParameter("y_prompt", NpgsqlTypes.NpgsqlDbType.Integer));
 
             // Iterate over the dictionary and insert each ImagePoint
             foreach (var kvp in imagePrompts)
@@ -186,14 +189,20 @@ namespace Helpers
 
                 foreach (var imagePoint in imagePoints)
                 {
+                    int x = (int)imagePoint.Column;
+                    int y = (int)imagePoint.Row;
+
                     // Set the parameter values
                     cmd.Parameters[0].Value = imageId;
-                    cmd.Parameters[1].Value = imagePoint.X
+                    cmd.Parameters[1].Value = x;
+                    cmd.Parameters[2].Value = y;
 
+                    Console.WriteLine($"Uploading for image {imageId} {x} {y}");
 
+                    await cmd.ExecuteNonQueryAsync();
                 }
             }
-        }*/
+        }
 
         public static ImagePoint IdealizedToImagePoint(IIdealizedPointObservation idealizedPoint, ImagePlane imageplane) 
         {

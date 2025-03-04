@@ -18,13 +18,12 @@ namespace TerrainPointExample
             Console.WriteLine("Loading image planes...");
             var imagePlanes = await DatabaseHelper.GetImagePlanesAsync(cameraSpecsList);
 
+            // Reading database for TerrainPoints and converting them to ImagePoints using imagePlanes
             Dictionary<string, List<ImagePoint>> imagePrompts = await DatabaseHelper.GetImageBagCoordinates(imagePlanes);
 
-            foreach (string imageId in imagePrompts.Keys)
-            {
-                Console.WriteLine($"Image {imageId} has {imagePrompts[imageId].Count} buildings in the image. ");
-            }
-
+            // Upload all the ImagePoints (2D prompts for SAM) to database by Imageid
+            await DatabaseHelper.UploadImagePrompts(imagePrompts);
+            
         }
     }
 }
