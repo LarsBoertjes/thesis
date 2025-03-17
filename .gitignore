@@ -26,3 +26,9 @@ code/ConsoleApp1/ConsoleApp1.sln
 /code/PolygonMapper/bin
 /code/PolygonMapper/.vs
 /experiments/checkpoints
+code/segmentation/boundingbox.ipynb
+code/segmentation/fullimage.ipynb
+code/segmentation/points.ipynb
+code/segmentation/points_test.ipynb
+code/segmentation/boundingbox.ipynb
+code/segmentation/boundingbox.ipynb
