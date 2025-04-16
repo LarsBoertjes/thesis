@@ -37,3 +37,7 @@ code/segmentation/boundingbox.ipynb
 *.ipynb
 *.ipynb
 *.pyc
+/code/pointCloudIndexes/obj
+/code/pointCloudIndexes/bin/Debug/net8.0
+/code/pointCloudIndexes/.vs
+*.ipynb

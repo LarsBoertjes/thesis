@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from scipy.ndimage import generic_filter
+import matplotlib.pyplot as plt
 
 def entropy_filter(window):
     """Computes entropy for a given kernel window."""
@@ -37,6 +38,13 @@ def compute_edge_entropy(image, alpha):
 
     distances = cv2.distanceTransform(255 - edge_mask, cv2.DIST_L2, 5)
 
-    edge_entropy = np.exp(-alpha * distances)
+    edge_entropy = np.exp(-alpha * distances).astype(float)
 
+    edge_entropy = (edge_entropy - np.min(edge_entropy)) / (np.max(edge_entropy) - np.min(edge_entropy))
     return edge_entropy
+
+def plot_image(image, cmap=None):
+    fig, ax = plt.subplots(figsize=(5, 5))
+    ax.imshow(image, cmap=cmap)
+    ax.axis('off')
+    plt.show()
