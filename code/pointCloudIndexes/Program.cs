@@ -18,20 +18,57 @@ class Program
 
         string baseOutputDir = "../../../../../data/processed/4_large_building_aerial/adaptive_point_cloud/";
 
-        var analyzer = new PointAnalyzer(currentCloud, config.NumNeighbors); 
-        var (curv, dens, edge, combined) = analyzer.Analyze();
+        for (int i = 0; i < config.NumIterations; ++i)
+        {
+            var analyzer = new PointAnalyzer(currentCloud, config.NumNeighbors);
+            var (curv, dens, edge, combined) = analyzer.Analyze();
 
-        string outputPathCurv = Path.Combine(baseOutputDir, "curvature.obj");
-        PointCloudWriter.WriteOBJ(outputPathCurv, curv);
+            // Write the combined output to file (optional)
+            string outputPathCombined = Path.Combine(baseOutputDir, "combined.obj");
+            PointCloudWriter.WriteOBJ(outputPathCombined, combined);
 
-        string outputPathDens = Path.Combine(baseOutputDir, "density.obj");
-        PointCloudWriter.WriteOBJ(outputPathDens, dens);
+            // Create sampled point cloud based on the nearest neighbors of combined points
+            var sampledPoints = new List<double[]>();
 
-        string outputPathEdge = Path.Combine(baseOutputDir, "edge.obj");
-        PointCloudWriter.WriteOBJ(outputPathEdge, edge);
+            // Find the 3 nearest neighbors from denseCloud for each point in combined
+            for (int j = 0; j < combined.Count; j++)
+            {
+                // Print progress of the current iteration
+                double progress = ((double)(j + 1) / combined.Count) * 100;
+                Console.WriteLine($"Iteration {i + 1}, Processing point {j + 1}/{combined.Count} ({progress:F2}% progress)");
 
-        string outputPathCombined = Path.Combine(baseOutputDir, "combined.obj");
-        PointCloudWriter.WriteOBJ(outputPathCombined, combined);
+                var (point, _) = combined[j];
+                var neighbors = FindNearestNeighbors(denseCloud, point, 3);
+                sampledPoints.Add(point);  // Add the point itself to the sampled point cloud
+
+                // Add the 3 nearest neighbors to the sampled point cloud
+                foreach (var neighbor in neighbors)
+                {
+                    sampledPoints.Add(neighbor);
+                }
+            }
+
+            // Create a new point cloud 'sampled'
+            var sampledCloud = new PointCloud(sampledPoints);
+
+            // Optionally, save the sampled point cloud to a file
+            string outputPathSampled = Path.Combine(baseOutputDir, $"adaptive_iteration_{i}.obj");
+            PointCloudWriter.WriteOBJ(outputPathSampled, sampledCloud.Points.Select(pt => (pt, 0.0)).ToList());
+            Console.WriteLine($"Adaptive iteration {i + 1} written as {outputPathSampled}");
+
+            // Update the current cloud for the next iteration
+            currentCloud = sampledCloud;
+        }
+
+        
+    }
+
+    // Find the k nearest neighbors for a given point from the denseCloud
+    static List<double[]> FindNearestNeighbors(PointCloud denseCloud, double[] point, int k)
+    {
+        var kdTree = KDTree.FromData<float>(denseCloud.Points.ToArray());
+        var nearestNeighbors = kdTree.Nearest(point, k);
+        return nearestNeighbors.Select(n => n.Node.Position).ToList();
     }
 }
 
@@ -66,7 +103,7 @@ class PointCloud
 {
     public List<double[]> Points { get; }
 
-    private PointCloud(List<double[]> points) => Points = points;
+    public PointCloud(List<double[]> points) => Points = points;
 
     public static PointCloud LoadFromOBJ(string path)
     {
