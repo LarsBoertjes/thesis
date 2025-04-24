@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Accord;
 using Accord.Collections;
 using Accord.Math;
 using Accord.Math.Decompositions;
@@ -12,35 +13,51 @@ class Program
     static void Main()
     {
         var config = AppConfig.LoadDefaults();
-        var pointCloud = PointCloud.LoadFromOBJ(config.InputFilePath);
+        var denseCloud = PointCloud.LoadFromOBJ(config.InputFilePath);
+        var currentCloud = PointCloud.LoadFromOBJ(config.InputFileSimplified);
 
-        var analyzer = new PointAnalyzer(pointCloud, config.NumNeighbors);
-        var results = analyzer.Analyze();
+        string baseOutputDir = "../../../../../data/processed/4_large_building_aerial/adaptive_point_cloud/";
 
-        PointCloudWriter.WriteOBJ(config.OutputCurvaturePath, results.TopCurvature);
-        PointCloudWriter.WriteOBJ(config.OutputDensityPath, results.TopDensity);
-        PointCloudWriter.WriteOBJ(config.OutputEdgePath, results.TopEdge);
+        var analyzer = new PointAnalyzer(currentCloud, config.NumNeighbors); 
+        var (curv, dens, edge, combined) = analyzer.Analyze();
 
-        Console.WriteLine("Done.");
+        string outputPathCurv = Path.Combine(baseOutputDir, "curvature.obj");
+        PointCloudWriter.WriteOBJ(outputPathCurv, curv);
+
+        string outputPathDens = Path.Combine(baseOutputDir, "density.obj");
+        PointCloudWriter.WriteOBJ(outputPathDens, dens);
+
+        string outputPathEdge = Path.Combine(baseOutputDir, "edge.obj");
+        PointCloudWriter.WriteOBJ(outputPathEdge, edge);
+
+        string outputPathCombined = Path.Combine(baseOutputDir, "combined.obj");
+        PointCloudWriter.WriteOBJ(outputPathCombined, combined);
     }
 }
 
 class AppConfig
 {
     public string InputFilePath { get; set; }
+    public string InputFileSimplified { get; set; }
     public string OutputCurvaturePath { get; set; }
     public string OutputDensityPath { get; set; }
     public string OutputEdgePath { get; set; }
     public int NumNeighbors { get; set; } = 25;
+    public int NumIterations { get; set; } = 5;
+    public double CurvatureWeight { get; set; } = 1.0 / 3;
+    public double DensityWeight { get; set; } = 1.0 / 3;
+    public double EdgeWeight { get; set; } = 1.0 / 3;
+    public string DensificationMethod { get; set; } = "knn"; 
 
     public static AppConfig LoadDefaults()
     {
         return new AppConfig
         {
             InputFilePath = "../../../../../data/processed/4_large_building_aerial/adaptive_point_cloud/dense_cut_out.obj",
+            InputFileSimplified = "../../../../../data/processed/4_large_building_aerial/adaptive_point_cloud/simplified_100.obj",
             OutputCurvaturePath = "../../../../../data/processed/4_large_building_aerial/entropy_point_cloud/curvature/high_curvature_points.obj",
             OutputDensityPath = "../../../../../data/processed/4_large_building_aerial/entropy_point_cloud/density/high_density_points.obj",
-            OutputEdgePath = "../../../../../data/processed/4_large_building_aerial/entropy_point_cloud/edge/high_edge_points.obj"
+            OutputEdgePath = "../../../../../data/processed/4_large_building_aerial/entropy_point_cloud/edge/high_edge_points.obj",
         };
     }
 }
@@ -83,7 +100,8 @@ class PointAnalyzer
 
     public (List<(double[] point, double score)> TopCurvature,
             List<(double[] point, double score)> TopDensity,
-            List<(double[] point, double score)> TopEdge) Analyze()
+            List<(double[] point, double score)> TopEdge,
+            List<(double[] point, double score)> TopCombined) Analyze()
     {
         var curvatureMap = _tree.ToDictionary(
             node => node,
@@ -93,20 +111,37 @@ class PointAnalyzer
         var curvatures = new List<(double[], double)>();
         var densities = new List<(double[], double)>();
         var edges = new List<(double[], double)>();
+        var combined = new List<(double[], double)>();
+
+        double wCurvature = 1.0 / 3;
+        double wDensity = 1.0 / 3;
+        double wEdges = 1.0 / 3;
 
         foreach (var node in _tree)
         {
-            curvatures.Add((node.Position, ComputeCurvature(node, curvatureMap)));
-            densities.Add((node.Position, ComputeDensity(node)));
-            edges.Add((node.Position, ComputeEdge(node)));
+            var curvatureValue = ComputeCurvature(node, curvatureMap);
+            var densityValue = ComputeDensity(node);
+            var edgeValue = ComputeEdge(node);
+
+            curvatures.Add((node.Position, curvatureValue));
+            densities.Add((node.Position, densityValue));
+            edges.Add((node.Position, edgeValue));
+
+            // Calculate the combined score using the weights
+            var combinedScore = curvatureValue * wCurvature + densityValue * wDensity + edgeValue * wEdges;
+            combined.Add((node.Position, combinedScore));
         }
 
+        // Sort the scores and take the top 50% of the points based on the combined score
         return (
-            curvatures.OrderByDescending(p => p.Item2).TakePercent(0.1).ToList(),
-            densities.OrderByDescending(p => p.Item2).TakePercent(0.1).ToList(),
-            edges.OrderByDescending(p => p.Item2).TakePercent(0.1).ToList()
+            curvatures.OrderByDescending(p => p.Item2).TakePercent(50).ToList(),
+            densities.OrderByDescending(p => p.Item2).TakePercent(50).ToList(),
+            edges.OrderByDescending(p => p.Item2).TakePercent(50).ToList(),
+            combined.OrderByDescending(p => p.Item2).TakePercent(50).ToList()
         );
     }
+
+
 
     private double ComputePointCurvature(KDTreeNode<float> point)
     {
@@ -204,3 +239,38 @@ static class Extensions
         return dict.TryGetValue(key, out var value) ? value : fallback;
     }
 }
+
+class CombinedScorer
+{
+    public static List<(double[] point, double score)> Compute(
+        List<(double[] point, double score)> curvature,
+        List<(double[] point, double score)> density,
+        List<(double[] point, double score)> edge,
+        double wCurvature, double wDensity, double wEdge)
+    {
+        // Create a dictionary to hold the combined scores
+        var map = new Dictionary<string, double>();
+
+        // Add curvature scores
+        foreach (var (pt, val) in curvature)
+            map[string.Join(",", pt)] = wCurvature * val;
+
+        // Add density scores
+        foreach (var (pt, val) in density)
+            map[string.Join(",", pt)] += wDensity * val;
+
+        // Add edge scores
+        foreach (var (pt, val) in edge)
+            map[string.Join(",", pt)] += wEdge * val;
+
+        // Return the list of points with combined scores, ordered by the score
+        return map.Select(kv => (kv.Key.Split(',').Select(double.Parse).ToArray(), kv.Value))
+                  .OrderByDescending(p => p.Item2)
+                  .ToList();
+    }
+}
+
+
+
+
+
