@@ -102,9 +102,9 @@ class PointAnalyzer
         }
 
         return (
-            curvatures.OrderByDescending(p => p.Item2).TakePercent(5).ToList(),
-            densities.OrderByDescending(p => p.Item2).TakePercent(5).ToList(),
-            edges.OrderByDescending(p => p.Item2).TakePercent(5).ToList()
+            curvatures.OrderByDescending(p => p.Item2).TakePercent(0.1).ToList(),
+            densities.OrderByDescending(p => p.Item2).TakePercent(0.1).ToList(),
+            edges.OrderByDescending(p => p.Item2).TakePercent(0.1).ToList()
         );
     }
 
