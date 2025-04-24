@@ -12,14 +12,16 @@ using Accord;
 using Accord.Math;
 using MathNet.Numerics.Integration;
 using Accord.Statistics.Kernels;
+using System.Reflection.Metadata.Ecma335;
+using Accord.Math.Geometry;
 
 
 class Program
 {
     static void Main()
     {
-        // //string outputFilePath = "../../../../../data/experimental/bouwpub/  .obj";
-        string filePath = "../../../../../data/outputs/bagids/0344100000157740_masks/dense.obj";
+        // string filePath = "../../../../../data/experimental/bouwpub/results/k150_e150/dense/0/fused.obj"; // bouwpub
+        string filePath = "../../../../../data/outputs/bagids/0344100000157740_masks/dense.obj"; // bagid 0344100000157740
         List<double[]> points = LoadOBJVertices(filePath);
 
         // Convert to array for kd-tree
@@ -28,23 +30,56 @@ class Program
         // Build kd-tree
         KDTree<float> tree = KDTree.FromData<float>(data);
 
-        // Compute curvature for each point
+        // Compute curvature, density and edge for each point
+        var curvatureValues = new List<(double curvature, double[] position)>();
         var densityValues = new List<(double density, double[] position)>();
+        var edgeValues = new List<(double edge, double[] position)>();
+
+        int numNeighbors = 25;
+
+        var curvatureMap = new Dictionary<KDTreeNode<float>, double>();
+        foreach (var node in tree)
+        {
+            double curvature = ComputePointCurvature(node, tree, numNeighbors);
+            curvatureMap[node] = curvature;
+        }
 
         foreach (var node in tree)
         {
+            double curvature = ComputeCurvature(node, tree, numNeighbors, curvatureMap);
             double density = ComputeDensity(node, tree);
+            double edge = ComputeEdge(node, tree);
+
+            curvatureValues.Add((curvature, node.Position));
             densityValues.Add((density, node.Position));
+            edgeValues.Add((edge, node.Position));
         }
 
         // Sort by curvature and take top 10%
-        int topCount = (int)(densityValues.Count * 0.1);
-        var topDensityPoints = densityValues.OrderByDescending(c => c.density).Take(topCount).ToList();
+        int topCountCurvature = (int)(curvatureValues.Count * 0.1);
+        var topCurvaturePoints = curvatureValues.OrderByDescending(c => c.curvature).Take(topCountCurvature).ToList();
+
+        int topCountDensity = (int)(densityValues.Count * 0.1);
+        var topDensityPoints = densityValues.OrderByDescending(c => c.density).Take(topCountDensity).ToList();
+
+        int topCountEdge = (int)(edgeValues.Count * 0.1);
+        var topEdgePoints = edgeValues.OrderByDescending(c => c.edge).Take(topCountEdge).ToList();
 
         // Write to output OBJ file
-        //string outputFilePath = "../../../../../data/experimental/bouwpub/high_density_points.obj";
-        string outputFilePath = "../../../../../data/outputs/bagids/0344100000157740_masks/high_density_points.obj";
-        WriteOBJ(outputFilePath, topDensityPoints);
+        // bouwpub
+        /*string outputFilePathCurvature =  "../../../../../data/experimental/bouwpub/results/k150_e150/dense/0/high_curvature_entropy_points.obj";
+        string outputFilePathEdge = "../../../../../data/experimental/bouwpub/results/k150_e150/dense/0/high_edge_points.obj";
+        string outputFilePathDensity = "../../../../../data/experimental/bouwpub/results/k150_e150/dense/0/high_density_points.obj";*/
+
+        // bagid 0344100000157740
+        string outputFilePathCurvature = "../../../../../data/outputs/bagids/0344100000157740_masks/high_curvature_points.obj";
+        string outputFilePathEdge = "../../../../../data/outputs/bagids/0344100000157740_masks/high_edge_points.obj";
+        string outputFilePathDensity = "../../../../../data/outputs/bagids/0344100000157740_masks/high_density_points.obj";
+
+        WriteOBJ(outputFilePathCurvature, topCurvaturePoints);
+        WriteOBJ(outputFilePathEdge, topEdgePoints);
+        WriteOBJ(outputFilePathDensity, topDensityPoints);
+
     }
 
     static List<double[]> LoadOBJVertices(string filePath)
@@ -79,62 +114,68 @@ class Program
         }
     }
 
-    /*static double ComputeCurvature(KDTreeNode<float> point, KDTree<float> tree)
+    static double ComputeCurvature(KDTreeNode<float> point, KDTree<float> tree, int numNeighbors, Dictionary<KDTreeNode<float>, double> curvatureMap)
     {
-        if (point == null || tree == null)
-        {
-            return 0;
-        }
+        if (point == null || tree == null || !curvatureMap.ContainsKey(point)) return 0;
 
-        var neighbors = tree.Nearest(point.Position, 10); // Get 10 nearest neighbors
-        if (neighbors.Count == 0)
-        {
-            return 0;
-        }
+        var neighbors = tree.Nearest(point.Position, numNeighbors);
+        if (neighbors.Count == 0) return 0;
 
-        // Compute gravity center (Oj)
-        double[] centroid = new double[point.Position.Length];
+        // Collect curvatures for point + neighbors
+        List<double> curvatures = new List<double> { curvatureMap[point] };
+
         foreach (var neighbor in neighbors)
         {
-            centroid = centroid.Add(neighbor.Node.Position);
+            if (curvatureMap.TryGetValue(neighbor.Node, out var c))
+                curvatures.Add(c);
         }
+
+        double sum = curvatures.Sum();
+        if (sum == 0) return 0;
+
+        List<double> probabilities = curvatures.Select(k => k / sum).ToList();
+
+        double entropy = 0;
+        foreach (var p in probabilities)
+        {
+            if (p > 0)
+                entropy -= p * Math.Log(p);
+        }
+
+        double maxEntropy = Math.Log(probabilities.Count);
+        if (maxEntropy == 0) return 0;
+
+        return entropy / maxEntropy;
+    }
+
+
+    static double ComputePointCurvature(KDTreeNode<float> point, KDTree<float> tree, int numNeighbors)
+    {
+        var neighbors = tree.Nearest(point.Position, numNeighbors);
+        if (neighbors.Count == 0) return 0;
+
+        double[] centroid = new double[3];
+        foreach (var neighbor in neighbors)
+            centroid = centroid.Add(neighbor.Node.Position);
         centroid = centroid.Divide(neighbors.Count);
 
-        // Compute covariance matrix
         double[,] covarianceMatrix = new double[3, 3];
         foreach (var neighbor in neighbors)
         {
             double[] diff = neighbor.Node.Position.Subtract(centroid);
-            double[,] outerProduct = diff.Outer(diff);
-            covarianceMatrix = covarianceMatrix.Add(outerProduct);
+            covarianceMatrix = covarianceMatrix.Add(diff.Outer(diff));
         }
         covarianceMatrix = covarianceMatrix.Divide(neighbors.Count);
 
-        // Compute eigenvalues & eigenvectors
         var evd = new Accord.Math.Decompositions.EigenvalueDecomposition(covarianceMatrix);
         double[] eigenvalues = evd.RealEigenvalues;
-        double[,] eigenvectors = evd.Eigenvectors;
+        double sum = eigenvalues.Sum();
+        if (sum == 0) return 0;
 
-        // Find the smallest eigenvalue's corresponding eigenvector (normal vector)
-        int minIndex = eigenvalues.IndexOf(eigenvalues.Min());
-        double[] normalVector = eigenvectors.GetColumn(minIndex);
+        return eigenvalues.Min() / sum;
+    }
 
-        // Compute mean included angles between normal vectors
-        double curvatureIndex = 0;
-        foreach (var neighbor in neighbors)
-        {
-            var neighborEvd = new Accord.Math.Decompositions.EigenvalueDecomposition(covarianceMatrix);
-            double[] neighborEigenvalues = neighborEvd.RealEigenvalues;
-            double[,] neighborEigenvectors = neighborEvd.Eigenvectors;
-            int neighborMinIndex = neighborEigenvalues.IndexOf(neighborEigenvalues.Min());
-            double[] neighborNormalVector = neighborEigenvectors.GetColumn(neighborMinIndex);
 
-            double dotProduct = normalVector.Dot(neighborNormalVector);
-            curvatureIndex += (dotProduct / (normalVector.Length * neighborNormalVector.Length) + 1.1);
-        }
-
-        return curvatureIndex / neighbors.Count;
-    }*/
 
     static double ComputeDensity(KDTreeNode<float> point, KDTree<float> tree)
     {
@@ -159,10 +200,39 @@ class Program
         return density;
     }
 
-    /*static double ComputeEdge(double[] point, double[][] neighbors)
+    static double ComputeEdge(KDTreeNode<float> point, KDTree<float> tree)
     {
-        double edge;
-        return edge;
-    }*/
+        int numNeighbors = 10;
+        var neighbors = tree.Nearest(point.Position, numNeighbors);
 
+        if (neighbors.Count == 0)
+        {
+            return 0;
+        }
+
+        int dimensions = point.Position.Length;
+        float[] gravityCenter = new float[dimensions];
+
+        // Sum all neighbor positions
+        foreach (var neighbor in neighbors)
+        {
+            for (int i = 0; i < dimensions; i++)
+            {
+                gravityCenter[i] += (float)neighbor.Node.Position[i];
+
+            }
+        }
+
+        // Average to get gravity center
+        for (int i = 0; i < dimensions; i++)
+        {
+            gravityCenter[i] /= numNeighbors;
+        }
+
+        // Compute Euclidean distance from the point to the gravity center
+        double edgeIndex = Math.Sqrt(
+                point.Position.Zip(gravityCenter, (a, b) => (a - b) * (a - b)).Sum());
+
+        return Math.Round(edgeIndex, 6);
+    }
 }

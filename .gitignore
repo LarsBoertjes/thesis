@@ -41,3 +41,9 @@ code/segmentation/boundingbox.ipynb
 /code/pointCloudIndexes/bin/Debug/net8.0
 /code/pointCloudIndexes/.vs
 *.ipynb
+/data/processed/1_detached_house_aerial/object_isolation
+/data/processed/3_tall_building_aerial
+/data/processed
+/data/raw
+/code/featureExtractionMatching/LightGlue
+code/segmentation/boundingbox.ipynb
