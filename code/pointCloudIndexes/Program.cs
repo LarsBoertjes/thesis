@@ -17,59 +17,67 @@ class Program
         var currentCloud = PointCloud.LoadFromOBJ(config.InputFileSimplified);
 
         string baseOutputDir = "../../../../../data/processed/4_large_building_aerial/adaptive_point_cloud/";
+          
 
-        for (int i = 0; i < config.NumIterations; ++i)
+        // 1. Compute high entropy points (combined)
+        var analyzer = new PointAnalyzer(currentCloud, 10);
+        var (curv, dens, edge, comb) = analyzer.Analyze();
+
+        // 2. Sample new halfway points
+        var cumulativePoints = new List<double[]>(currentCloud.Points);
+        var sampledPoints = new List<double[]>();
+        Console.WriteLine($"Number of high entropy points: {comb.Count}");
+
+        foreach (var point in comb)
         {
-            var analyzer = new PointAnalyzer(currentCloud, config.NumNeighbors);
-            var (curv, dens, edge, combined) = analyzer.Analyze();
-
-            // Write the combined output to file (optional)
-            string outputPathCombined = Path.Combine(baseOutputDir, "combined.obj");
-            PointCloudWriter.WriteOBJ(outputPathCombined, combined);
-
-            // Create sampled point cloud based on the nearest neighbors of combined points
-            var sampledPoints = new List<double[]>();
-
-            // Find the 3 nearest neighbors from denseCloud for each point in combined
-            for (int j = 0; j < combined.Count; j++)
-            {
-                // Print progress of the current iteration
-                double progress = ((double)(j + 1) / combined.Count) * 100;
-                Console.WriteLine($"Iteration {i + 1}, Processing point {j + 1}/{combined.Count} ({progress:F2}% progress)");
-
-                var (point, _) = combined[j];
-                var neighbors = FindNearestNeighbors(denseCloud, point, 3);
-                sampledPoints.Add(point);  // Add the point itself to the sampled point cloud
-
-                // Add the 3 nearest neighbors to the sampled point cloud
-                foreach (var neighbor in neighbors)
-                {
-                    sampledPoints.Add(neighbor);
-                }
-            }
-
-            // Create a new point cloud 'sampled'
-            var sampledCloud = new PointCloud(sampledPoints);
-
-            // Optionally, save the sampled point cloud to a file
-            string outputPathSampled = Path.Combine(baseOutputDir, $"adaptive_iteration_{i}.obj");
-            PointCloudWriter.WriteOBJ(outputPathSampled, sampledCloud.Points.Select(pt => (pt, 0.0)).ToList());
-            Console.WriteLine($"Adaptive iteration {i + 1} written as {outputPathSampled}");
-
-            // Update the current cloud for the next iteration
-            currentCloud = sampledCloud;
+            // Find the half way point with nearest neighbor and add it to sampledPoints
+            var halfway = findHalfwayPoint(currentCloud, denseCloud, point.point);
+            sampledPoints.Add(halfway);
         }
 
-        
+        cumulativePoints.AddRange(sampledPoints);
+
+        string outputPath = Path.Combine(baseOutputDir, $"halfway_points.obj");
+        PointCloudWriter.WriteOBJ(outputPath, cumulativePoints.Select(pt => (pt, 0.0)).ToList());
+        Console.WriteLine($"Written as {outputPath}");
+
     }
 
-    // Find the k nearest neighbors for a given point from the denseCloud
+
+    static double[] findHalfwayPoint(PointCloud Cloud, PointCloud denseCloud, double[] point)
+    {
+        // Find nearest neighbor for high entropy point
+        var kdTree = KDTree.FromData<float>(Cloud.Points.ToArray());
+        var nearest = kdTree.Nearest(point, 2);
+
+        var nearestPoint = nearest[1].Node.Position;
+
+        // Console.WriteLine($"POINT X: {point[0].ToString()}, Y: {point[1].ToString()}, Z: {point[2].ToString()}");
+        // Console.WriteLine($"NN    X: {nearestPoint[0].ToString()}, Y: {nearestPoint[1].ToString()}, Z: {nearestPoint[2].ToString()}");
+
+        // Compute halfway point
+        var halfway = new double[point.Length];
+        for (int i = 0; i < point.Length; i++)
+        {
+            halfway[i] = (point[i] + nearestPoint[i]) / 2.0;
+        }
+
+        // Get dense point cloud tree
+        var kdTreeDense = KDTree.FromData<float>(denseCloud.Points.ToArray());
+        var halfwayNeighbor = kdTreeDense.Nearest(halfway, 1)[0];
+
+        double[] halfwayPoint = halfwayNeighbor.Node.Position;
+
+        return halfwayPoint;
+    }
+
     static List<double[]> FindNearestNeighbors(PointCloud denseCloud, double[] point, int k)
     {
         var kdTree = KDTree.FromData<float>(denseCloud.Points.ToArray());
         var nearestNeighbors = kdTree.Nearest(point, k);
         return nearestNeighbors.Select(n => n.Node.Position).ToList();
     }
+
 }
 
 class AppConfig
