@@ -17,31 +17,92 @@ class Program
         var currentCloud = PointCloud.LoadFromOBJ(config.InputFileSimplified);
 
         string baseOutputDir = "../../../../../data/processed/4_large_building_aerial/adaptive_point_cloud/";
-          
 
-        // 1. Compute high entropy points (combined)
-        var analyzer = new PointAnalyzer(currentCloud, 10);
-        var (curv, dens, edge, comb) = analyzer.Analyze();
-
-        // 2. Sample new halfway points
-        var cumulativePoints = new List<double[]>(currentCloud.Points);
-        var sampledPoints = new List<double[]>();
-        Console.WriteLine($"Number of high entropy points: {comb.Count}");
-
-        foreach (var point in comb)
-        {
-            // Find the half way point with nearest neighbor and add it to sampledPoints
-            var halfway = findHalfwayPoint(currentCloud, denseCloud, point.point);
-            sampledPoints.Add(halfway);
-        }
-
-        cumulativePoints.AddRange(sampledPoints);
-
-        string outputPath = Path.Combine(baseOutputDir, $"halfway_points.obj");
-        PointCloudWriter.WriteOBJ(outputPath, cumulativePoints.Select(pt => (pt, 0.0)).ToList());
-        Console.WriteLine($"Written as {outputPath}");
-
+        RunAdaptiveSamplingIterations(
+            config.NumIterations,
+            denseCloud,
+            currentCloud,
+            baseOutputDir
+        );
     }
+
+    // Inside RunAdaptiveSamplingIterations method
+    static void RunAdaptiveSamplingIterations(
+        int numIterations,
+        PointCloud denseCloud,
+        PointCloud currentCloud,
+        string outputDir
+    )
+    {
+        var cumulativePoints = new List<double[]>(currentCloud.Points);
+        var cumulativeNormals = new List<double[]>(currentCloud.Normals); // ADDED
+
+        for (int i = 0; i < numIterations; ++i)
+        {
+            Console.WriteLine($"\n--- Iteration {i + 1}/{numIterations} ---");
+
+            // 1. Analyze current cloud for high entropy points
+            var analyzer = new PointAnalyzer(currentCloud, 10);
+            var (_, _, _, combined) = analyzer.Analyze();
+            Console.WriteLine($"Found {combined.Count} high entropy points");
+
+            // Build KD-trees once per iteration
+            var kdTree = KDTree.FromData<float>(currentCloud.Points.ToArray());
+            var kdTreeDense = KDTree.FromData<float>(denseCloud.Points.ToArray());
+
+            // 2. Sample halfway points to 6 nearest neighbors per high entropy point
+            var sampledPoints = new List<double[]>();
+            var sampledNormals = new List<double[]>();
+            int index = 0;
+
+            foreach (var (point, _) in combined)
+            {
+                var neighbors = kdTree.Nearest(point, 7); // Includes the point itself
+
+                for (int n = 1; n < neighbors.Count; n++) // Skip self
+                {
+                    var neighbor = neighbors[n].Node.Position;
+
+                    var halfway = new double[point.Length];
+                    for (int j = 0; j < point.Length; j++)
+                    {
+                        halfway[j] = (point[j] + neighbor[j]) / 2.0;
+                    }
+
+                    // Snap halfway to closest real dense cloud point
+                    var nearestDense = kdTreeDense.Nearest(halfway, 1);
+                    if (nearestDense.Count > 0)
+                    {
+                        var snappedPoint = nearestDense[0].Node.Position;
+                        sampledPoints.Add(snappedPoint);
+
+                        int indexInDense = denseCloud.Points.FindIndex(p => p.SequenceEqual(snappedPoint));
+                        if (indexInDense >= 0 && indexInDense < denseCloud.Normals.Count)
+                            sampledNormals.Add(denseCloud.Normals[indexInDense]);
+                        else
+                            sampledNormals.Add(new double[] { 0, 0, 0 });
+                    }
+                }
+
+                index++;
+                if (index % 100 == 0 || index == combined.Count)
+                    Console.WriteLine($"Processed {index}/{combined.Count} points...");
+            }
+
+            // 3. Update cumulative point cloud and write to file
+            cumulativePoints.AddRange(sampledPoints);
+            cumulativeNormals.AddRange(sampledNormals); // ADDED
+
+            string outputPath = Path.Combine(outputDir, $"adaptive_iteration_{i}.obj");
+            PointCloudWriter.WriteOBJ(outputPath,
+                cumulativePoints.Zip(cumulativeNormals, (pt, nrm) => (pt, nrm)).ToList());
+            Console.WriteLine($"Wrote iteration {i + 1} to {outputPath}");
+
+            // 4. Set up for next iteration
+            currentCloud = new PointCloud(cumulativePoints, cumulativeNormals); // MODIFIED
+        }
+    }
+
 
 
     static double[] findHalfwayPoint(PointCloud Cloud, PointCloud denseCloud, double[] point)
@@ -88,7 +149,7 @@ class AppConfig
     public string OutputDensityPath { get; set; }
     public string OutputEdgePath { get; set; }
     public int NumNeighbors { get; set; } = 25;
-    public int NumIterations { get; set; } = 5;
+    public int NumIterations { get; set; } = 4;
     public double CurvatureWeight { get; set; } = 1.0 / 3;
     public double DensityWeight { get; set; } = 1.0 / 3;
     public double EdgeWeight { get; set; } = 1.0 / 3;
@@ -110,27 +171,52 @@ class AppConfig
 class PointCloud
 {
     public List<double[]> Points { get; }
+    public List<double[]> Normals { get; }
 
-    public PointCloud(List<double[]> points) => Points = points;
+    public PointCloud(List<double[]> points, List<double[]> normals = null)
+    {
+        Points = points;
+        Normals = normals ?? new List<double[]>(new double[points.Count][]);
+    }
 
     public static PointCloud LoadFromOBJ(string path)
     {
-        var points = File.ReadLines(path)
-            .Where(line => line.StartsWith("v "))
-            .Select(line =>
+        var points = new List<double[]>();
+        var normals = new List<double[]>();
+
+        foreach (var line in File.ReadLines(path))
+        {
+            var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length < 4) continue;
+
+            if (parts[0] == "v")
             {
-                var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                return new double[]
+                points.Add(new double[]
                 {
                     double.Parse(parts[1], CultureInfo.InvariantCulture),
                     double.Parse(parts[2], CultureInfo.InvariantCulture),
                     double.Parse(parts[3], CultureInfo.InvariantCulture)
-                };
-            }).ToList();
+                });
+            }
+            else if (parts[0] == "vn")
+            {
+                normals.Add(new double[]
+                {
+                    double.Parse(parts[1], CultureInfo.InvariantCulture),
+                    double.Parse(parts[2], CultureInfo.InvariantCulture),
+                    double.Parse(parts[3], CultureInfo.InvariantCulture)
+                });
+            }
+        }
 
-        return new PointCloud(points);
+        // Pad normals if missing
+        while (normals.Count < points.Count)
+            normals.Add(new double[] { 0, 0, 0 });
+
+        return new PointCloud(points, normals);
     }
 }
+
 
 class PointAnalyzer
 {
@@ -260,15 +346,28 @@ class PointAnalyzer
 
 static class PointCloudWriter
 {
-    public static void WriteOBJ(string path, List<(double[] point, double score)> data)
+    public static void WriteOBJ(string path, List<(double[] point, double[] normal)> data)
     {
         using var writer = new StreamWriter(path);
+
+        // Write vertices
         foreach (var (point, _) in data)
         {
-            writer.WriteLine($"v {point[0].ToString(CultureInfo.InvariantCulture)} {point[1].ToString(CultureInfo.InvariantCulture)} {point[2].ToString(CultureInfo.InvariantCulture)}");
+            writer.WriteLine($"v {point[0].ToString(CultureInfo.InvariantCulture)} " +
+                             $"{point[1].ToString(CultureInfo.InvariantCulture)} " +
+                             $"{point[2].ToString(CultureInfo.InvariantCulture)}");
+        }
+
+        // Write normals
+        foreach (var (_, normal) in data)
+        {
+            writer.WriteLine($"vn {normal[0].ToString(CultureInfo.InvariantCulture)} " +
+                             $"{normal[1].ToString(CultureInfo.InvariantCulture)} " +
+                             $"{normal[2].ToString(CultureInfo.InvariantCulture)}");
         }
     }
 }
+
 
 static class Extensions
 {
