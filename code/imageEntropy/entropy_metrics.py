@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 from scipy.ndimage import generic_filter
-import matplotlib.pyplot as plt
 
 def entropy_filter(window):
     """Computes entropy for a given kernel window."""
@@ -9,11 +8,6 @@ def entropy_filter(window):
     probabilities = counts / counts.sum()
     entropy = -np.sum(probabilities * np.log2(probabilities + 1e-10))
     return entropy
-
-def unique_filter(window):
-    """Computes unique masks within a filter"""
-    unique_count = len(np.unique(window))
-    return unique_count
 
 def compute_kernel_entropy(image, kernel_size):
     """Computes entropy on a certain image"""
@@ -23,14 +17,6 @@ def compute_kernel_entropy(image, kernel_size):
     # Normalize entropy for visualization
     entropy_map = (entropy_map - np.min(entropy_map)) / (np.max(entropy_map) - np.min(entropy_map))
     return entropy_map
-
-def compute_unique_entropy(image, kernel_size):
-    """Computes unique masks within a filter"""
-    unique_map = generic_filter(image.astype(float), unique_filter, size=kernel_size)
-
-    # Normalize entropy for visualization
-    unique_map = (unique_map - np.min(unique_map)) / (np.max(unique_map) - np.min(unique_map))
-    return unique_map
 
 def compute_edge_entropy(image, alpha):
     """Computes edge-based entropy, considering proximity to edges."""
@@ -42,9 +28,3 @@ def compute_edge_entropy(image, alpha):
 
     edge_entropy = (edge_entropy - np.min(edge_entropy)) / (np.max(edge_entropy) - np.min(edge_entropy))
     return edge_entropy
-
-def plot_image(image, cmap=None):
-    fig, ax = plt.subplots(figsize=(5, 5))
-    ax.imshow(image, cmap=cmap)
-    ax.axis('off')
-    plt.show()

@@ -112,8 +112,7 @@ mask_generator = SamAutomaticMaskGenerator(model=sam)
 
 # --- Process all buildings ---
 buildings = [
-    "1_detached_house_aerial",
-    # Add more buildings here if needed
+    "1_detached_house_aerial"
 ]
 
 for building in buildings:
